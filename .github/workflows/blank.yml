@@ -22,6 +22,7 @@ jobs:
         run: |
           ssh-keyscan -H ${{ env.SERVER_HOST }} >> ~/.ssh/known_hosts
           
+          
       - name: Build project
         run: |
           # Вставьте команду сборки вашего проекта, например:
