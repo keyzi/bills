@@ -38,4 +38,4 @@ jobs:
           # Создание директории на сервере, если её нет
           ssh $SERVER_USER@$SERVER_HOST "mkdir -p $DEPLOY_DIR"
           # Копирование файлов на сервер
-          rsync -avz --delete dist/ $SERVER_USER@$SERVER_HOST:$DEPLOY_DIR
+          rsync -avz --delete public/ $SERVER_USER@$SERVER_HOST:$DEPLOY_DIR
