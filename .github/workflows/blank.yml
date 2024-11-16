@@ -26,7 +26,7 @@ jobs:
 
       - name: Deploy to server
         env:
-          SERVER_HOST: 176.114.89.169
+          SERVER_HOST: 176.114.89.151
           SERVER_USER: root
           DEPLOY_DIR: /var/www/ # Укажите директорию на сервере, куда будет копироваться сборка
         run: |
