@@ -8,7 +8,12 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
+    env:
+          SERVER_HOST: 176.114.89.151
+          SERVER_USER: root
+          DEPLOY_DIR: /var/www/build # Укажите директорию на сервере, куда будет копироваться сборка
+          
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -16,21 +21,29 @@ jobs:
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.4
         with:
-          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
-
+          ssh-private-key: ${{ secrets.gitkey }}
+          
+      - name: Add server to known_hosts
+        run: |
+          ssh-keyscan -H ${{ env.SERVER_HOST }} >> ~/.ssh/known_hosts
+          
       - name: Build project
         run: |
           # Вставьте команду сборки вашего проекта, например:
           npm install
           npm run build
+      
+      - name: Verify build directory contents
+        run: |
+          ls -la build
+        # Проверяем, что директория не пуста
 
+      - name: Check current directory before deploy
+        run: pwd
+        
       - name: Deploy to server
-        env:
-          SERVER_HOST: 176.114.89.169
-          SERVER_USER: root
-          DEPLOY_DIR: /../../../var/www/ # Укажите директорию на сервере, куда будет копироваться сборка
         run: |
           # Создание директории на сервере, если её нет
           ssh $SERVER_USER@$SERVER_HOST "mkdir -p $DEPLOY_DIR"
           # Копирование файлов на сервер
-          rsync -avz --delete dist/ $SERVER_USER@$SERVER_HOST:$DEPLOY_DIR
+          rsync -avz --delete build/ $SERVER_USER@$SERVER_HOST:$DEPLOY_DIR
