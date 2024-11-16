@@ -32,7 +32,15 @@ jobs:
           # Вставьте команду сборки вашего проекта, например:
           npm install
           npm run build
+      
+      - name: Verify build directory contents
+        run: |
+          ls -la build
+        # Проверяем, что директория не пуста
 
+      - name: Check current directory before deploy
+        run: pwd
+        
       - name: Deploy to server
         run: |
           # Создание директории на сервере, если её нет
