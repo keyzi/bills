@@ -12,7 +12,7 @@ jobs:
     env:
           SERVER_HOST: 176.114.89.151
           SERVER_USER: root
-          DEPLOY_DIR: /var/www/ # Укажите директорию на сервере, куда будет копироваться сборка
+          DEPLOY_DIR: /var/www/build # Укажите директорию на сервере, куда будет копироваться сборка
           
     steps:
       - name: Checkout code
