@@ -8,7 +8,12 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
+    env:
+          SERVER_HOST: 176.114.89.151
+          SERVER_USER: root
+          DEPLOY_DIR: /var/www/ # Укажите директорию на сервере, куда будет копироваться сборка
+          
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -22,7 +27,6 @@ jobs:
         run: |
           ssh-keyscan -H ${{ env.SERVER_HOST }} >> ~/.ssh/known_hosts
           
-          
       - name: Build project
         run: |
           # Вставьте команду сборки вашего проекта, например:
@@ -30,10 +34,6 @@ jobs:
           npm run build
 
       - name: Deploy to server
-        env:
-          SERVER_HOST: 176.114.89.151
-          SERVER_USER: root
-          DEPLOY_DIR: /var/www/ # Укажите директорию на сервере, куда будет копироваться сборка
         run: |
           # Создание директории на сервере, если её нет
           ssh $SERVER_USER@$SERVER_HOST "mkdir -p $DEPLOY_DIR"
