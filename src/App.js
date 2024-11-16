@@ -1,6 +1,21 @@
+import { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [value, setValue] = useState('');
+  const [text, setText] = useState('');
+
+const handleChange = (event) => {
+  setValue(event.target.value)
+}
+
+  const handleKeyDown = (event) => {
+    if(event.key === 'Enter') {
+      setText(value);
+      setValue('')
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -17,7 +32,8 @@ function App() {
         >
           Learn React
         </a> */}
-        <input></input>
+        <input value={value} onChange={handleChange} onKeyDown={handleKeyDown}></input>
+        <div>{text}</div>
       </header>
     </div>
   );
